@@ -22,11 +22,7 @@ services:
     runtime: static
     plan: free
     buildCommand: "echo 'No build needed for static site'"
-    staticPublishPath: ./frontend-render
-    routes:
-      - type: rewrite
-        source: /api/*
-        destination: https://lawmox-api.onrender.com/*
+    publishDir: ./frontend-render
 
 databases:
   # PostgreSQL Database
