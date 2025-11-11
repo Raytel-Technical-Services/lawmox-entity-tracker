@@ -332,3 +332,8 @@ body {
     transform: translate(0, 0);
     opacity: 1;
 }
+
+/* Hidden sections for navigation */
+.hidden-section {
+    display: none;
+}

@@ -68,11 +68,11 @@ class EntityTracker {
     showSection(section) {
         // Hide all sections
         document.querySelectorAll('.content-section').forEach(sec => {
-            sec.style.display = 'none';
+            sec.classList.add('hidden-section');
         });
 
         // Show selected section
-        document.getElementById(`${section}-section`).style.display = 'block';
+        document.getElementById(`${section}-section`).classList.remove('hidden-section');
 
         // Update nav
         document.querySelectorAll('.nav-link').forEach(link => {
