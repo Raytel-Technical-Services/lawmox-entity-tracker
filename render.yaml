@@ -1,0 +1,36 @@
+services:
+  # Backend API Service
+  - type: web
+    name: lawmox-api
+    runtime: python
+    plan: free
+    buildCommand: "pip install -r requirements-render.txt"
+    startCommand: "python backend-render/app.py"
+    healthCheckPath: /health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: lawmox-db
+          property: connectionString
+      - key: ENCRYPTION_KEY
+        generateValue: true
+        sync: false
+
+  # Frontend Static Site
+  - type: web
+    name: lawmox-frontend
+    runtime: static
+    plan: free
+    buildCommand: "echo 'No build needed for static site'"
+    staticPublishPath: ./frontend-render
+    routes:
+      - type: rewrite
+        source: /api/*
+        destination: https://lawmox-api.onrender.com/*
+
+databases:
+  # PostgreSQL Database
+  - name: lawmox-db
+    databaseName: lawmox_entity_tracker
+    user: lawmox_user
+    plan: free
