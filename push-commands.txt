@@ -1,0 +1,21 @@
+# Run these commands AFTER creating the GitHub repository at:
+# https://github.com/new
+
+# Repository name: lawmox-entity-tracker
+# Owner: raytelmatt
+# Don't initialize with README, .gitignore, or license
+
+# Then run these commands:
+cd "/Users/iahmatt/.codeium/windsurf/Lawmox Entity Tracker"
+git remote set-url origin https://github.com/raytelmatt/lawmox-entity-tracker.git
+git push -u origin main
+
+# After push completes, enable GitHub Pages:
+# 1. Go to your repository
+# 2. Settings → Pages  
+# 3. Source: Deploy from a branch
+# 4. Branch: main / (root)
+# 5. Click Save
+
+# Frontend will be available at:
+# https://raytelmatt.github.io/lawmox-entity-tracker/

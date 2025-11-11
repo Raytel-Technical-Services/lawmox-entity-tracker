@@ -5,9 +5,9 @@
 
 echo "🚀 Starting Lawmox Entity Tracker Deployment..."
 
-# Step 1: Add GitHub remote (repository: Raytel-Technical-Services/lawmox-entity-tracker)
+# Step 1: Add GitHub remote (repository: raytelmatt/lawmox-entity-tracker)
 echo "📝 Step 1: Adding GitHub remote..."
-git remote add origin https://github.com/Raytel-Technical-Services/lawmox-entity-tracker.git
+git remote add origin https://github.com/raytelmatt/lawmox-entity-tracker.git
 
 # Step 2: Push to GitHub
 echo "📤 Step 2: Pushing to GitHub..."
@@ -23,7 +23,7 @@ echo "   4. Branch: main / (root)"
 echo "   5. Click Save"
 
 echo ""
-echo "✅ Frontend will be available at: https://Raytel-Technical-Services.github.io/lawmox-entity-tracker/"
+echo "✅ Frontend will be available at: https://raytelmatt.github.io/lawmox-entity-tracker/"
 echo ""
 echo "📋 Next steps:"
 echo "1. Deploy backend (choose Railway, Heroku, or Render)"

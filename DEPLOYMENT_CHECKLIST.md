@@ -25,7 +25,7 @@
 5. Run these commands:
 
 ```bash
-git remote add origin https://github.com/Raytel-Technical-Services/lawmox-entity-tracker.git
+git remote add origin https://github.com/raytelmatt/lawmox-entity-tracker.git
 git branch -M main
 git push -u origin main
 ```
@@ -35,7 +35,7 @@ git push -u origin main
 2. Source: Deploy from a branch
 3. Branch: main / (root)
 4. Click Save
-5. Frontend will be available at: `https://Raytel-Technical-Services.github.io/lawmox-entity-tracker/`
+5. Frontend will be available at: `https://raytelmatt.github.io/lawmox-entity-tracker/`
 
 ### **3. Backend Deployment (Choose One)**
 
@@ -112,7 +112,7 @@ git push -u origin main
 
 After deployment, your application will be available at:
 
-- **Frontend**: `https://Raytel-Technical-Services.github.io/lawmox-entity-tracker/`
+- **Frontend**: `https://raytelmatt.github.io/lawmox-entity-tracker/`
 - **Backend**: `https://your-app.railway.app` (or your chosen platform)
 - **API**: `https://your-app.railway.app/health`
 
