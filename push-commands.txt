@@ -2,12 +2,12 @@
 # https://github.com/new
 
 # Repository name: lawmox-entity-tracker
-# Owner: raytelmatt
+# Owner: Raytel-Technical-Services
 # Don't initialize with README, .gitignore, or license
 
 # Then run these commands:
 cd "/Users/iahmatt/.codeium/windsurf/Lawmox Entity Tracker"
-git remote set-url origin https://github.com/raytelmatt/lawmox-entity-tracker.git
+git remote set-url origin https://github.com/Raytel-Technical-Services/lawmox-entity-tracker.git
 git push -u origin main
 
 # After push completes, enable GitHub Pages:
@@ -18,4 +18,4 @@ git push -u origin main
 # 5. Click Save
 
 # Frontend will be available at:
-# https://raytelmatt.github.io/lawmox-entity-tracker/
+# https://Raytel-Technical-Services.github.io/lawmox-entity-tracker/
