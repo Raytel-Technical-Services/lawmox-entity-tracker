@@ -64,9 +64,9 @@ ENCRYPTION_KEY=your_encryption_key_here
 python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
 ```
 
-### 5. Deploy Frontend
-1. Click **"New +"** → **"Static Site"**
-2. Select the same repository
+### 5. Deploy Frontend (Manual Setup)
+1. In Render dashboard, click **"New +"** → **"Static Site"**
+2. Select your `lawmox-entity-tracker` repository
 3. **Build Command**: `echo "No build needed"`
 4. **Publish Directory**: `frontend-render`
 5. **Add Custom Domain** (optional)
