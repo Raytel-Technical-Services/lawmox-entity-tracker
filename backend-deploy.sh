@@ -1,0 +1,57 @@
+#!/bin/bash
+
+# Lawmox Entity Tracker - Backend Deployment Options
+
+echo "🔧 Backend Deployment Options for Lawmox Entity Tracker"
+echo "=" * 60
+
+echo ""
+echo "🚀 OPTION 1: Railway (Recommended - Easiest)"
+echo "---------------------------------------------"
+echo "1. Go to https://railway.app"
+echo "2. Click 'Start a New Project'"
+echo "3. 'Deploy from GitHub repo'"
+echo "4. Select your lawmox-entity-tracker repository"
+echo "5. Railway will auto-detect Python"
+echo "6. Add environment variables:"
+echo "   - SUPABASE_URL: https://your-project.supabase.co"
+echo "   - SUPABASE_KEY: your_anon_key"
+echo "   - SUPABASE_SERVICE_KEY: your_service_role_key"
+echo "   - ENCRYPTION_KEY: uaa_EVZYxTn6sR902AN0E04HWWT1z6k_8qgKbMKFNvA="
+echo "7. Click 'Deploy'"
+
+echo ""
+echo "🚀 OPTION 2: Render (Free Tier Available)"
+echo "------------------------------------------"
+echo "1. Go to https://render.com"
+echo "2. Click 'New + Web Service'"
+echo "3. Connect your GitHub repository"
+echo "4. Build Command: pip install -r requirements.txt"
+echo "5. Start Command: python backend/app.py"
+echo "6. Add same environment variables as above"
+echo "7. Click 'Create Web Service'"
+
+echo ""
+echo "🚀 OPTION 3: Heroku (Classic Option)"
+echo "--------------------------------------"
+echo "1. Install Heroku CLI: brew install heroku/brew/heroku"
+echo "2. Login: heroku login"
+echo "3. Create app: heroku create your-app-name"
+echo "4. Set environment variables:"
+echo "   heroku config:set SUPABASE_URL=your_url"
+echo "   heroku config:set SUPABASE_KEY=your_key"
+echo "   heroku config:set SUPABASE_SERVICE_KEY=your_service_key"
+echo "   heroku config:set ENCRYPTION_KEY=uaa_EVZYxTn6sR902AN0E04HWWT1z6k_8qgKbMKFNvA="
+echo "5. Deploy: git push heroku main"
+
+echo ""
+echo "📋 After Backend Deployment:"
+echo "----------------------------"
+echo "1. Copy your backend URL (e.g., https://your-app.railway.app)"
+echo "2. Update frontend/app.js line 6:"
+echo "   this.apiBaseUrl = 'https://your-backend-url.com';"
+echo "3. Commit and push the URL update"
+echo "4. Test your complete application!"
+
+echo ""
+echo "🎯 Recommendation: Use Railway for fastest deployment!"
