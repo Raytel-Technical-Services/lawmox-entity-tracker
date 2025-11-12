@@ -1,123 +1,267 @@
-# Lawmox Entity Tracker
+# 🏢 Lawmox Entity Tracker
 
-A comprehensive business entity tracking application built with Python (FastAPI) backend, Supabase database, and GitHub Pages frontend.
+A comprehensive business entity tracking application built for simplicity and reliability.
 
-## Features
+## 🎯 What It Does
 
-### Entity Management
-- Track business entities with critical information:
-  - Entity Name
-  - EIN (Employer Identification Number)
-  - Date of Formation
-  - Registered Address
-  - State of Formation
-  - Entity Type (LLC, Corporation, etc.)
-  - Status (Active, Inactive, Dissolved)
+Track and manage business entities, their associated accounts, tasks, and task steps - all in one unified platform.
 
-### Account Management
-- Store account information for each entity:
-  - Account Name
-  - Login URL
-  - Username and encrypted password storage
-  - Account Type (Bank, Tax, Business License, etc.)
-  - Notes
+### **Core Features**
+- ✅ **Entity Management**: Track business entities, EINs, formation dates, addresses
+- ✅ **Account Management**: Store encrypted credentials for entity accounts
+- ✅ **Task Management**: Create and track tasks for each entity
+- ✅ **Task Steps**: Break down tasks into detailed steps
+- ✅ **Real-time Updates**: Live data synchronization
+- ✅ **Secure Storage**: Encrypted password protection
 
-### Task Management
-- Create and track tasks with:
-  - Task Title and Description
-  - Deadlines
-  - Priority Levels (Low, Medium, High)
-  - Status Tracking (Pending, In Progress, Completed, Overdue)
-  - Step-by-step task breakdown
+## 🐳 Single Container Deployment
 
-## Technology Stack
+**Everything runs in ONE Docker container - no external services needed!**
 
-- **Backend**: Python with FastAPI
-- **Database**: Supabase (PostgreSQL)
-- **Frontend**: HTML, CSS, JavaScript with Bootstrap 5
-- **Deployment**: GitHub Pages for frontend, any cloud platform for backend
-- **Security**: Password encryption using Fernet symmetric encryption
+### **Quick Start - 3 Commands**
 
-## Setup Instructions
+```bash
+# Clone the repository
+git clone https://github.com/Raytel-Technical-Services/lawmox-entity-tracker.git
+cd lawmox-entity-tracker
 
-### 1. Supabase Setup
+# Run the container
+docker-compose up -d
 
-1. Go to [supabase.com](https://supabase.com) and create a new project
-2. Run the SQL schema from `database_schema.sql` in the Supabase SQL editor
-3. Get your project credentials:
-   - Project URL
-   - Anon Key
-   - Service Role Key
+# Access your application
+open http://localhost:8000
+```
 
-### 2. Backend Setup
+### **What's Inside the Container**
+- 🗄️ **PostgreSQL Database** (internal, auto-initialized)
+- 🚀 **FastAPI Backend** (REST API + serves frontend)
+- 🎨 **Frontend Interface** (Bootstrap-based responsive UI)
+- 🔧 **Supervisor** (manages all services)
+  ## 📋 Architecture
 
-1. Clone this repository:
-   ```bash
-   git clone <repository-url>
-   cd lawmox-entity-tracker
-   ```
+```
+Docker Container (port 8000)
+├── PostgreSQL Database
+│   ├── entities table
+│   ├── accounts table (encrypted passwords)
+│   ├── tasks table
+│   └── task_steps table
+├── FastAPI Backend
+│   ├── REST API endpoints
+│   ├── Database operations
+│   └── Frontend serving
+└── Frontend Interface
+    ├── Entity management
+    ├── Account tracking
+    ├── Task management
+    └── Real-time updates
+```
 
-2. Install Python dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+## 🚀 Deployment Options
 
-3. Create environment file:
-   ```bash
-   cp .env.example .env
-   ```
+### **Option 1: Docker Compose (Recommended)**
+```bash
+docker-compose up -d
+```
 
-4. Edit `.env` with your Supabase credentials:
-   ```env
-   SUPABASE_URL=your_supabase_project_url
-   SUPABASE_KEY=your_supabase_anon_key
-   SUPABASE_SERVICE_KEY=your_supabase_service_role_key
-   ENCRYPTION_KEY=your_generated_encryption_key
-   ```
+### **Option 2: Docker Build**
+```bash
+docker build -t lawmox-entity-tracker .
+docker run -p 8000:8000 lawmox-entity-tracker
+```
 
-5. Generate encryption key:
-   ```bash
-   python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
-   ```
+### **Option 3: Cloud Deployment**
+The container can be deployed anywhere Docker runs:
+- **AWS ECS/Fargate**
+- **Google Cloud Run**
+- **Azure Container Instances**
+- **DigitalOcean App Platform**
 
-6. Run the backend server:
-   ```bash
-   cd backend
-   python app.py
-   ```
+## 🌐 Access Points
 
-The API will be available at `http://localhost:8000`
+Once running, access your application at:
 
-### 3. Frontend Setup (GitHub Pages)
+- **Main Application**: `http://localhost:8000`
+- **API Endpoints**: `http://localhost:8000/entities`
+- **Health Check**: `http://localhost:8000/health`
 
-1. Enable GitHub Pages in your repository settings:
-   - Go to Settings → Pages
-   - Select "Deploy from a branch"
-   - Choose `main` branch and `/` folder
-   - Or create a `gh-pages` branch
+## 📊 Database Schema
 
-2. Update the API URL in `frontend/app.js`:
-   ```javascript
-   this.apiBaseUrl = 'https://your-backend-url.com'; // Update to your deployed backend URL
-   ```
+### **Entities Table**
+- `id` (UUID, Primary Key)
+- `entity_name` (VARCHAR)
+- `ein` (VARCHAR, Unique)
+- `date_of_formation` (DATE)
+- `registered_address` (TEXT)
+- `state_of_formation` (VARCHAR)
+- `entity_type` (VARCHAR)
+- `status` (VARCHAR, default: 'active')
 
-3. Commit and push your changes:
-   ```bash
-   git add .
-   git commit -m "Initial setup"
-   git push origin main
-   ```
+### **Accounts Table**
+- `id` (UUID, Primary Key)
+- `account_name` (VARCHAR)
+- `username` (VARCHAR, Unique)
+- `encrypted_password` (TEXT) - Encrypted for security
+- `entity_id` (UUID, Foreign Key)
 
-## API Endpoints
+### **Tasks Table**
+- `id` (UUID, Primary Key)
+- `task_name` (VARCHAR)
+- `description` (TEXT)
+- `status` (VARCHAR, default: 'pending')
+- `entity_id` (UUID, Foreign Key)
 
-### Entities
+### **Task Steps Table**
+- `id` (UUID, Primary Key)
+- `step_name` (VARCHAR)
+- `description` (TEXT)
+- `status` (VARCHAR, default: 'pending')
+- `task_id` (UUID, Foreign Key)
+
+## 🔧 Configuration
+
+### **Environment Variables**
+```bash
+ENCRYPTION_KEY=your_encryption_key_here
+```
+
+### **Generate Encryption Key**
+```bash
+python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
+```
+
+## 📱 Features in Detail
+
+### **Entity Management**
+- Create, read, update, delete business entities
+- Track EIN numbers, formation dates, addresses
+- Filter by entity type and status
+- Link accounts and tasks to entities
+
+### **Account Management**
+- Store account credentials securely
+- Password encryption using Fernet symmetric encryption
+- Link accounts to specific entities
+- Standalone or entity-linked accounts
+
+### **Task Management**
+- Create and manage tasks for entities
+- Track task status (pending, in_progress, completed)
+- Detailed task descriptions
+- Entity-linked or standalone tasks
+
+### **Task Steps**
+- Break down tasks into detailed steps
+- Track individual step completion
+- Hierarchical task organization
+- Progress monitoring
+
+## 🔒 Security Features
+
+- **Password Encryption**: All passwords encrypted using Fernet symmetric encryption
+- **Secure Database**: PostgreSQL with proper access controls
+- **Container Isolation**: Docker container provides process isolation
+- **No External Dependencies**: Reduces attack surface
+
+## 📈 Monitoring & Logs
+
+### **View Application Logs**
+```bash
+# View all logs
+docker-compose logs -f
+
+# View specific service logs
+docker-compose logs -f fastapi
+docker-compose logs -f postgresql
+```
+
+### **Health Monitoring**
+```bash
+# Check application health
+curl http://localhost:8000/health
+
+# Check container status
+docker-compose ps
+```
+
+## 🗃️ Data Persistence
+
+### **Database Backups**
+```bash
+# Backup database
+docker exec lawmox-app pg_dump -U lawmox_user lawmox_entity_tracker > backup.sql
+
+# Restore database
+docker exec -i lawmox-app psql -U lawmox_user lawmox_entity_tracker < backup.sql
+```
+
+## 📚 API Documentation
+
+### **Entity Endpoints**
 - `GET /entities` - List all entities
 - `POST /entities` - Create new entity
 - `GET /entities/{id}` - Get specific entity
 - `PUT /entities/{id}` - Update entity
 - `DELETE /entities/{id}` - Delete entity
 
-### Accounts
+### **Account Endpoints**
+- `GET /accounts` - List all accounts
+- `POST /accounts` - Create new account
+- `GET /accounts/{id}` - Get specific account
+- `PUT /accounts/{id}` - Update account
+- `DELETE /accounts/{id}` - Delete account
+
+### **Task Endpoints**
+- `GET /tasks` - List all tasks
+- `POST /tasks` - Create new task
+- `GET /tasks/{id}` - Get specific task
+- `PUT /tasks/{id}` - Update task
+- `DELETE /tasks/{id}` - Delete task
+
+### **Task Step Endpoints**
+- `GET /task-steps` - List all task steps
+- `POST /task-steps` - Create new task step
+- `GET /task-steps/{id}` - Get specific task step
+- `PUT /task-steps/{id}` - Update task step
+- `DELETE /task-steps/{id}` - Delete task step
+
+## 🆘 Troubleshooting
+
+### **Container Won't Start**
+```bash
+# Check logs
+docker-compose logs
+
+# Rebuild container
+docker-compose down
+docker-compose up --build
+```
+
+### **Database Connection Issues**
+```bash
+# Check PostgreSQL status
+docker-compose exec lawmox-app service postgresql status
+
+# Restart services
+docker-compose restart
+```
+
+### **Port Already in Use**
+```bash
+# Change port in docker-compose.yml
+ports:
+  - "8080:8000"  # Use port 8080 instead
+```
+
+## 📄 License
+
+This project is licensed under the MIT License.
+
+---
+
+**🎯 The simplest, most reliable entity tracking solution - everything in one container!**
+
+Built with ❤️ using FastAPI, PostgreSQL, Bootstrap, and Docker.
 - `GET /accounts` - List all accounts
 - `POST /accounts` - Create new account
 - `GET /accounts/{id}` - Get specific account

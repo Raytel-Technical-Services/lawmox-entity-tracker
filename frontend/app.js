@@ -65,46 +65,6 @@ class EntityTracker {
         });
     }
 
-    showSection(section) {
-        // Hide all sections
-        document.querySelectorAll('.content-section').forEach(sec => {
-            sec.classList.add('hidden-section');
-        });
-
-        // Show selected section
-        document.getElementById(`${section}-section`).classList.remove('hidden-section');
-
-        // Update nav
-        document.querySelectorAll('.nav-link').forEach(link => {
-            link.classList.remove('active');
-        });
-        document.querySelector(`.nav-link[data-section="${section}"]`).classList.add('active');
-
-        this.currentSection = section;
-        this.loadSectionData(section);
-    }
-
-    loadSectionData(section) {
-        switch(section) {
-            case 'entities':
-                this.loadEntities();
-                break;
-            case 'accounts':
-                this.loadAccounts();
-                this.populateEntityDropdowns();
-                break;
-            case 'tasks':
-                this.loadTasks();
-                this.populateEntityDropdowns();
-                break;
-        }
-    }
-
-    refreshCurrentSection() {
-        this.loadSectionData(this.currentSection);
-        this.showNotification('Data refreshed', 'success');
-    }
-
     async apiCall(endpoint, method = 'GET', data = null) {
         try {
             const options = {
@@ -132,6 +92,19 @@ class EntityTracker {
         }
     }
 
+    async loadData() {
+        try {
+            await Promise.all([
+                this.loadEntities(),
+                this.loadAccounts(),
+                this.loadTasks(),
+                this.loadTaskSteps()
+            ]);
+        } catch (error) {
+            console.error('Failed to load data:', error);
+        }
+    }
+
     async loadEntities() {
         try {
             this.entities = await this.apiCall('/entities');
@@ -156,6 +129,15 @@ class EntityTracker {
             this.renderTasks();
         } catch (error) {
             console.error('Failed to load tasks:', error);
+        }
+    }
+
+    async loadTaskSteps() {
+        try {
+            this.taskSteps = await this.apiCall('/task-steps');
+            this.renderTaskSteps();
+        } catch (error) {
+            console.error('Failed to load task steps:', error);
         }
     }
 
@@ -323,6 +305,60 @@ class EntityTracker {
         tbody.querySelectorAll('.delete-task').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 this.deleteTask(e.target.closest('button').dataset.id);
+            });
+        });
+    }
+
+    renderTaskSteps() {
+        const tbody = document.getElementById('taskStepsTableBody');
+        
+        if (this.taskSteps.length === 0) {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="5" class="text-center py-4">
+                        <div class="empty-state">
+                            <i class="fas fa-tasks"></i>
+                            <p>No task steps found. Add your first task step to get started.</p>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            return;
+        }
+
+        tbody.innerHTML = this.taskSteps.map(step => {
+            const task = this.tasks.find(t => t.id === step.task_id);
+            
+            return `
+                <tr>
+                    <td><strong>${step.step_name}</strong></td>
+                    <td>${task ? task.task_title : 'Unknown'}</td>
+                    <td>${step.description || '-'}</td>
+                    <td><span class="badge status-badge status-${step.status}">${step.status}</span></td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-sm btn-outline-primary edit-task-step" data-id="${step.id}">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger delete-task-step" data-id="${step.id}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `;
+        }).join('');
+
+        // Add event listeners
+        tbody.querySelectorAll('.edit-task-step').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                this.editTaskStep(e.target.closest('button').dataset.id);
+            });
+        });
+
+        tbody.querySelectorAll('.delete-task-step').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                this.deleteTaskStep(e.target.closest('button').dataset.id);
             });
         });
     }
